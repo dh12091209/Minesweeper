@@ -100,7 +100,6 @@ public class GameBoard {
                 if(board[randomRow][randomCol] == EmptyTile){
                     board[randomRow][randomCol] = BOMB+10;
                     bombCount++;
-                    System.out.println(".");
                 }
             }
         }
