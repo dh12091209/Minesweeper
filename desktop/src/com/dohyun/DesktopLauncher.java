@@ -12,5 +12,6 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("minesweeper");
 		new Lwjgl3Application(new MyGdxGame(), config);
+
 	}
 }

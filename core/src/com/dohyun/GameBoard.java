@@ -40,19 +40,37 @@ public class GameBoard {
 
     private ArrayList<Location> getNeighbors(int row, int col){
         ArrayList<Location> locs = new ArrayList<>();
-        for(int i= -1; i <2; i++){
-            for(int j = -1; j<2; j++){
-                if(isValidLoc(row-i,col-j) && (row -i != row && col -j != col)) locs.add(new Location(row-i,col-j));
+        for(int i= row-1; i <row + 2; i++){
+            for(int j = col -1; j<col + 2; j++){
+                if(isValidLoc(i,j) && (i != row || j != col)) {
+                    locs.add(new Location(i,j));
+                }
             }
         }
         return locs;
     }
-    public void prints(){
-        for(Location x: getNeighbors(3,5)){
-            System.out.println(x.getRow() +", " + x.getCol());
+    private int bombsAroundLoc(int row, int col){
+        ArrayList<Location> locs = getNeighbors(row,col);
+
+        int count = 0;
+        for(Location temp:locs){
+            if (board[temp.getRow()][temp.getCol()] %10 == BOMB){
+                count ++;
+            }
         }
+        return count;
     }
 
+    private void initBoardNumber(){
+        for(int row = 0; row< board.length ; row ++){
+            for(int col = 0; col<board[row].length; col++){
+                if(board[row][col] % 10 != BOMB){
+                    int numOfBombs = bombsAroundLoc(row,col);
+                    board[row][col] = numOfBombs + 10;
+                }
+            }
+        }
+    }
     public boolean isValidLoc(int row, int col){
         return row>=0 && row< board.length&& col>=0 && col<board[0].length;
     }
@@ -66,6 +84,7 @@ public class GameBoard {
             if(firstClick){
                 firstClick = false;
                 placeBombs(rowClicked,colClicked);
+                initBoardNumber();
             }
         }
     }
@@ -95,6 +114,22 @@ public class GameBoard {
                     spriteBatch.draw(emptyTile, 10+(col*25),600-35-(row*25));
                 }else if(board[row][col] == BOMB){
                     spriteBatch.draw(bomb, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 1){
+                    spriteBatch.draw(oneTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 2){
+                    spriteBatch.draw(twoTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 3){
+                    spriteBatch.draw(threeTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 4){
+                    spriteBatch.draw(fourTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 5){
+                    spriteBatch.draw(fiveTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 6){
+                    spriteBatch.draw(sixTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 7){
+                    spriteBatch.draw(sevenTile, 10+(col*25),600-35-(row*25));
+                }else if(board[row][col] == 8){
+                    spriteBatch.draw(eightTile, 10+(col*25),600-35-(row*25));
                 }
             }
         }
