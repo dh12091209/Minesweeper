@@ -85,8 +85,24 @@ public class GameBoard {
                 firstClick = false;
                 placeBombs(rowClicked,colClicked);
                 initBoardNumber();
+                clickShowEmpty(rowClicked,colClicked);
             }
         }
+    }
+    public void clickShowEmpty(int rowClicked,int colClicked){
+        int expand = 1;
+        for(int i =rowClicked-1; i<=rowClicked+1; i++){
+            for(int j = colClicked-1; j<=colClicked+1;j++){
+               if(isValidLoc(i,j)){
+                   if(isEmpty(i,j)) ;
+               }
+            }
+        }
+
+    }
+    private boolean isEmpty(int row, int col){
+        if (board[row][col] == 0) return true;
+        return false;
     }
     private void placeBombs(int rowClicked, int colClicked){
         int bombCount =0;
