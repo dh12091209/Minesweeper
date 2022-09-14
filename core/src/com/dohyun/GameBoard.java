@@ -82,12 +82,11 @@ public class GameBoard {
 
         if(isValidLoc(rowClicked,colClicked)){
             board[rowClicked][colClicked]=board[rowClicked][colClicked] % 10;
+            //generate bombs and numbers
             if(firstClick){
                 firstClick = false;
-                board[rowClicked][colClicked]=board[rowClicked][colClicked] % 10;
                 placeBombs(rowClicked,colClicked);
                 initBoardNumber();
-
             }
             clickShowEmpty(rowClicked,colClicked);
             System.out.println(board[rowClicked][colClicked]);
@@ -95,27 +94,17 @@ public class GameBoard {
 
     }
     public void clickShowEmpty(int rowClicked,int colClicked){
-//        if (isEmpty(rowClicked,colClicked) ){
-//            board[rowClicked][colClicked] = 0;
-//            if(colClicked>1) if(board[rowClicked][colClicked-1] != 0) clickShowEmpty(rowClicked,colClicked-1); //top
-//            if(colClicked+1<board[0].length) if(board[rowClicked][colClicked+1] != 0)clickShowEmpty(rowClicked,colClicked+1);//bottom
-//            if(rowClicked>1) if(board[rowClicked-1][colClicked] != 0)clickShowEmpty(rowClicked-1,colClicked);//left
-//            if(rowClicked+1<board.length) if(board[rowClicked+1][colClicked] != 0) clickShowEmpty(rowClicked+1,colClicked);//right
-//        }else if(isNum(rowClicked,colClicked)){
-//            board[rowClicked][colClicked]=board[rowClicked][colClicked] % 10;
-//        }
-        ArrayList<Location> locs = getNeighbors(rowClicked,colClicked);
-        for(Location x: locs){
-            if(isEmpty(x.getRow(),x.getCol())){
-                board[x.getRow()][x.getCol()] = 0;
-                clickShowEmpty(x.getRow(),x.getCol());
-            }else if(isNum(x.getRow(), x.getCol())){
-                board[x.getRow()][x.getCol()]=board[x.getRow()][x.getCol()] % 10;
+        if(isEmpty(rowClicked,colClicked)){
+            ArrayList<Location> locs = getNeighbors(rowClicked,colClicked);
+            board[rowClicked][colClicked] = 0;
+            for(Location x: locs){
+                if(board[x.getRow()][x.getCol()] == 10) clickShowEmpty(x.getRow(),x.getCol());
+                else if(isNum(x.getRow(),x.getCol())) board[x.getRow()][x.getCol()] = board[x.getRow()][x.getCol()]%10;
             }
         }
     }
     private boolean isEmpty(int row, int col){
-        if (board[row][col]%10 == 0) return true;
+        if (board[row][col]%10 == 0 ) return true;
         return false;
     }
     private boolean isNum(int row, int col){

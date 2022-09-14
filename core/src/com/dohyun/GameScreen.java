@@ -64,7 +64,7 @@ public class GameScreen implements Screen {
 
     }
     public void handleClick(){
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             mouseX = Gdx.input.getX();
             mouseY = Gdx.input.getY();
             board.handleClick(mouseX,mouseY);
@@ -74,13 +74,13 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         clearScreen();
         //handle player input
-
+        handleClick();
         //A.I. updates
 
         //all texture drawing must happen between begin() and end()
+
         spriteBatch.begin();
         board.draw(spriteBatch);
-        handleClick();
         tempFont.draw(spriteBatch,"Clicked at (" + mouseX + "," + mouseY + ")", 400,100);
         tempFont.draw(spriteBatch,"row: " + (mouseY-10)/25, 400,80);
         tempFont.draw(spriteBatch,"col: " + (mouseX-10)/25, 400,60);
