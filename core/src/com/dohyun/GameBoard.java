@@ -90,12 +90,15 @@ public class GameBoard {
         }
     }
     public void clickShowEmpty(int rowClicked,int colClicked){
-        int expand = 1;
-        for(int i =rowClicked-1; i<=rowClicked+1; i++){
-            for(int j = colClicked-1; j<=colClicked+1;j++){
-               if(isValidLoc(i,j)){
-                   if(isEmpty(i,j)) ;
-               }
+        ArrayList<Location> locs = getNeighbors(rowClicked,colClicked);
+        System.out.println("working");
+        if (isEmpty(rowClicked,colClicked)){
+            board[rowClicked][colClicked] = 0;
+            for(Location x:locs){
+                if(x.getCol()>1)clickShowEmpty(x.getRow(),x.getCol()-1);
+                if(x.getCol()<board[0].length)clickShowEmpty(x.getRow(),x.getCol()+1);
+                if(x.getRow()>1)clickShowEmpty(x.getRow()-1,x.getCol());
+                if(x.getRow()<board.length)clickShowEmpty(x.getRow()+1,x.getCol());
             }
         }
 
